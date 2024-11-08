@@ -17,7 +17,6 @@ using namespace std;
 class CPU{
 private:
 
-
     vector <string> screen;
     string IR ;
     string  PC ;
@@ -34,26 +33,27 @@ public:
 
 
     //explain the decode or the meaning of the instruction means what by the cout
-    // 1 -> cu // 2->alu // 3->c000
-    int decode(bool option);//done // 0 --> step by step
-    // 1--> whole program
-
+    int decode(bool option);
 
     //execute then show memo, registers
     bool excute(int& row,int& column,int Case,Memory &memo);//we have access to the registers
-    //if zero continue , else stop
 
+    // Clear all the value
+    void clear();
 
-    void clear();//done
+    //get the value of pc
+    string getter_PC();
 
-    string getter_PC();//done
-
+    // set the value of pc
     void setter_PC(string value);
 
-    string getter_IR();//done
+    // get the value of IR
+    string getter_IR();
 
-    vector<string> get_screen();//done
+    // get the value of screen
+    vector<string> get_screen();
 
+    // get the value of register
     Register getter_reg();
 };
 

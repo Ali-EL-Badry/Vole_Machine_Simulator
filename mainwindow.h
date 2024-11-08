@@ -31,32 +31,44 @@ public:
 
 
 private slots:
+    // to print the value of register
     void set_Register();
+
+    // to print the value of memory
     void set_memory();
 
+    // to insert the file to program
     void on_bttnInsert_clicked();
 
+    // to clear the screen
     void on_pushButton_clicked();
 
+    // to print the value of screen
     void set_screen();
 
+    // to print the value of Pc
     void set_pc();
 
+    // to print the value of IR
     void set_IR();
 
+    // to change from dec to hex
     string decToHex(int number);
 
+    // to change the value from hex to decimal
     int hexToDec(const char& number);
 
+    // to run on cycle
     void on_bttnDecode_clicked();
 
-
+    // to run all the program
     void on_bttnRun_clicked();
 
 private:
     Ui::MainWindow *ui;
     Memory memory;
     CPU cpu;
+    // Decode
     map<char,string>Instructions{
         {'1'," LOAD the register R with the bit pattern found in the memory cell whose address is XY."}
 

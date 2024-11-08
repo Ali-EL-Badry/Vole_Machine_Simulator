@@ -1,7 +1,7 @@
 #include "CPU.h"
 
 
-//done
+// clear all the values
 void CPU::clear() {
     IR.clear();
     PC.clear();
@@ -11,7 +11,7 @@ void CPU::clear() {
 }
 
 
-//done ~
+// Fetch the data from memory
 bool CPU ::fetch(int& row,int& column,const vector<vector<string>>&memo) {
 
     string ir,pc,rows,columns;
@@ -56,7 +56,7 @@ bool CPU ::fetch(int& row,int& column,const vector<vector<string>>&memo) {
     return true;
 }
 
-//done
+// check if the instruction is valid or not
 bool CPU ::valid(std::string ir) {
 
     string part;
@@ -88,7 +88,6 @@ bool CPU ::valid(std::string ir) {
     }else if(ir[0]=='A'){
         if(ir[2]!='0')
             return false;
-        //part=ir[1]+ir[3];
         string part1;string part2;
         part1=ir[1]; part2=ir[3];
         part=part1+part2;
@@ -103,12 +102,8 @@ bool CPU ::valid(std::string ir) {
     return true;
 }
 
-//done
-int CPU  ::decode(bool option) {
-
-
-
-
+// Decode the value of instrunction by categories it
+int CPU ::decode(bool option) {
     if(IR[0]=='1'||IR[0]=='2'||IR[0]=='3'||IR[0]=='4'||IR[0]=='B'||IR[0]=='D'){
         return 1;
     }
@@ -118,13 +113,9 @@ int CPU  ::decode(bool option) {
         int returnValue = 3;
         return returnValue;
     }
-
-
-
-
 }
 
-//done
+// run all the code and give the result
 bool CPU::excute(int& row,int& column,int Case, Memory &memo) {
 
     if(Case==3){//halt
@@ -135,8 +126,7 @@ bool CPU::excute(int& row,int& column,int Case, Memory &memo) {
     string  s;
 
     if(Case==1){
-        //cu
-
+        // CU
 
         string part1,part2;
         part1=translation[1];part2=translation[2];
@@ -173,7 +163,9 @@ bool CPU::excute(int& row,int& column,int Case, Memory &memo) {
 
     }
     else{
-   string part3,part1,part2;part3=translation[0];
+        // ALU
+
+        string part3,part1,part2;part3=translation[0];
         part1=translation[1];part2=translation[2];
 
         s=part3+part1+part2;
@@ -197,25 +189,27 @@ bool CPU::excute(int& row,int& column,int Case, Memory &memo) {
     return 0;
 }
 
-//done
+// Get the pc
 string CPU :: getter_PC(){
     return PC;
 }
 
-//done
+// Get the IR
 string  CPU:: getter_IR(){
     return IR;
 }
 
-//done
+// Get the screen
 vector<string> CPU ::get_screen() {
     return screen;
 }
 
+// Set the PC
 void CPU::setter_PC(string value){
     this->PC = value;
 }
 
+// get the register value
 Register CPU::getter_reg(){
     return this->registers;
 };

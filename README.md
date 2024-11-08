@@ -7,3 +7,4 @@
 ## The program 🖥🖥
 ![Alt text](Screenshot%202024-11-08%20152050.png)
 ## UML Design
+https://miro.com/app/board/uXjVLN6UU9E=/

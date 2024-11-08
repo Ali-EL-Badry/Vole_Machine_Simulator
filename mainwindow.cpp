@@ -17,10 +17,11 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    // Style of the program
     ui->setupUi(this);
     ui->Memory->setStyleSheet(
         "QHeaderView::section {"
-        "  background-color : #2a2e30; color: #3498db;"     // Text color for headers
+        "  background-color : #2a2e30; color: #3498db;"
         "}"
         "QTableCornerButton::section {"
         "   background-color: #2a2e30;;"
@@ -33,9 +34,10 @@ MainWindow::MainWindow(QWidget *parent)
         "   border: none;"
         "}"
         "QHeaderView::section {"
-        "  background-color : #2a2e30; color: #3498db;"     // Text color for headers
+        "  background-color : #2a2e30; color: #3498db;"
         "}"
         );
+
     // Set the main window background color and text color
     this->setStyleSheet("background-color: #2a2e30; color: #3498db;");
 
@@ -47,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
     const QColor colorOdd("#3498db");  // Dark gray for odd rows
     const QColor colorEven("#2a2e30");  // Pink for even rows
 
+    // print part
     set_Register();
     set_memory();
     set_screen();
@@ -58,6 +61,7 @@ MainWindow::~MainWindow(){
     delete ui;
 }
 
+// Print memory
 void MainWindow::set_memory(){
     vector<vector<string>> memo = memory.get_nstrctions();
     for(int i = 0 ; i < 16 ; i++){
@@ -69,6 +73,7 @@ void MainWindow::set_memory(){
     }
 }
 
+// print register
 void MainWindow::set_Register() {
     vector<string> values = cpu.getter_reg().print_rgstr();
     for (int j = 0; j < 16; ++j) {
@@ -78,9 +83,10 @@ void MainWindow::set_Register() {
     }
 }
 
-
+// take file
 void MainWindow::on_bttnInsert_clicked(){
     bool ok;
+    // Validate the pc value
     QString place1 = QInputDialog::getText(this, "Input Parameter", "Enter your parameter:", QLineEdit::Normal, "", &ok);
     string place = place1.toStdString();
     if(!ok)
@@ -91,6 +97,8 @@ void MainWindow::on_bttnInsert_clicked(){
         if(!ok)
             return;
     }
+
+    // Take file from user
     QString fileName = QFileDialog::getOpenFileName(this, "Open File", "", "Text Files (*.txt);;All Files (*)");
     bool first = true;
     int  row,column;
@@ -101,6 +109,7 @@ void MainWindow::on_bttnInsert_clicked(){
         if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             QTextStream in(&file);
             string s;
+            // Validate the value in file
             while (!in.atEnd()) {
                 QString word;
                 in >> word;
@@ -207,12 +216,14 @@ void MainWindow::on_bttnInsert_clicked(){
             QMessageBox::warning(this, "Error", "Could not open the file.");
         }
     }
+
+    // print
     set_memory();
     cpu.setter_PC(place);
     set_pc();
 }
 
-
+// Clear and print the screen
 void MainWindow::on_pushButton_clicked(){
     cpu.clear();
     memory.clear();
@@ -224,7 +235,7 @@ void MainWindow::on_pushButton_clicked(){
     QMessageBox::information(this, "All Clean", "Everything is completed and cleaned up!");
 }
 
-
+// Print screen
 void MainWindow::set_screen(){
     vector<string> screen = cpu.get_screen();
     QString vectorText;
@@ -237,22 +248,23 @@ void MainWindow::set_screen(){
     ui->screen->setText(vectorText.isEmpty() ? "There is nothing here" : vectorText);
 }
 
-
+// Print Pc
 void MainWindow::set_pc(){
     ui->PC->setText(QString::fromStdString(cpu.getter_PC().empty()? "00" : cpu.getter_PC()));
 }
-
+// print IR
 void MainWindow::set_IR(){
     ui->IR->setText(QString::fromStdString(cpu.getter_IR().empty() ? "0000" : cpu.getter_IR()));
 }
 
-
+// Print Hex to Dec
 int MainWindow::hexToDec(const char& number){
     if(number - '0' < 10)
         return  number - '0';
     return  number - 'A' + 10;
 }
 
+// change dec to hex
 string MainWindow::decToHex(int number){
     if (number == 0) return "0";
     string result;
@@ -272,6 +284,7 @@ string MainWindow::decToHex(int number){
 }
 
 
+// To run the program for on loop
 void MainWindow::on_bttnDecode_clicked(){
     bool isvalid, isHalt= false;int Case;
     int i = hexToDec(cpu.getter_PC()[0]), j = hexToDec(cpu.getter_PC()[1]);
@@ -320,7 +333,7 @@ void MainWindow::on_bttnDecode_clicked(){
 }
 
 
-
+// TO run all the program
 void MainWindow::on_bttnRun_clicked(){
     bool isvalid, isHalt= false;int Case;
     for (int i = 0; i < 16 ; ++i) {
